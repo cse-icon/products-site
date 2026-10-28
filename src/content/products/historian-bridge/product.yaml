@@ -5,7 +5,7 @@
 # consumer, not the only one. See docs/authoring-content.md.
 
 name: Historian Bridge
-order: 30
+order: 40
 shortDescription: >-
   Continuously publish Canary Historian data — readings, aggregates, tag
   metadata, and events — as Parquet files and Apache Iceberg tables in your own

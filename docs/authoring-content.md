@@ -139,7 +139,7 @@ to publish.
 When a product ships in several flavours that share a platform, add a
 `variants/` folder. Each file becomes an anchored section on the product page,
 with jump links generated above them — so `anchor: canary` is reachable at
-`/mcp#canary`.
+`/historian-mcp#canary`.
 
 ```yaml
 ---

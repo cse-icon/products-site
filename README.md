@@ -8,7 +8,8 @@ deployment, one product per URL slug.
 | Product | Path | Roadmap |
 |---|---|---|
 | InterLink | [/interlink](https://products.cse-icon.com/interlink) | Yes — org project #4 |
-| Historian MCP | [/mcp](https://products.cse-icon.com/mcp) | No |
+| Historian MCP | [/historian-mcp](https://products.cse-icon.com/historian-mcp) | No |
+| Geo SCADA MCP | [/geoscada-mcp](https://products.cse-icon.com/geoscada-mcp) | No |
 | Historian Bridge | [/historian-bridge](https://products.cse-icon.com/historian-bridge) | No |
 
 ---
@@ -49,7 +50,7 @@ committed to the repo as JSON. The only live backend is the vote API.
 │  ┌──────────────┐    ┌──────────────┐    ┌────────────────────────┐  │
 │  │ Main branch  │───▶│ GitHub Pages │───▶│ Static site            │  │
 │  │ (push)       │    │ (deploy)     │    │ Astro 6 + Tailwind 4   │  │
-│  └──────────────┘    └──────────────┘    │ /  /interlink  /mcp    │  │
+│  └──────────────┘    └──────────────┘    │ /  /<product-slug>     │  │
 │         │                                └───────────┬────────────┘  │
 │         │ (api/ changes)                             │ (votes)       │
 │         ▼                                            ▼               │
@@ -129,10 +130,13 @@ products-site/
 │   │   ├── interlink/
 │   │   │   ├── product.yaml     # Identity, hero, CTA, SEO, roadmap opt-in
 │   │   │   └── sections/*.md    # Feature sections, ordered by filename
-│   │   ├── mcp/
+│   │   ├── historian-mcp/
 │   │   │   ├── product.yaml
 │   │   │   ├── sections/*.md
 │   │   │   └── variants/*.md    # Canary / PI anchored sections
+│   │   ├── geoscada-mcp/
+│   │   │   ├── product.yaml
+│   │   │   └── sections/*.md
 │   │   └── historian-bridge/
 │   │       ├── product.yaml
 │   │       └── sections/*.md
