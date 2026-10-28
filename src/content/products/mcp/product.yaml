@@ -1,41 +1,39 @@
-# MCP Servers
+# Historian MCP
 #
-# draft: true keeps this product out of the published site and the product index.
-# Before flipping it to false:
-#   1. Replace every TODO in variants/pi.md and variants/geo-scada.md.
-#   2. Confirm the shared sections in sections/ are accurate for all three
-#      servers, not just Canary.
-# See docs/authoring-content.md.
-draft: true
+# One server per historian. variants/ holds what is specific to Canary or to
+# AVEVA PI; sections/ holds only what is true of both. Copy is written from
+# cse-icon/CSE-Historian-MCP. See docs/authoring-content.md.
 
-name: MCP Servers
+name: Historian MCP
 order: 20
 shortDescription: >-
-  Let AI assistants query your process historian in plain English. Read-only
-  Model Context Protocol servers for Canary, AVEVA PI, and Geo SCADA — with
-  analytics that return answers instead of raw data.
+  Let AI assistants query your Canary or AVEVA PI historian in plain English. A
+  read-only Model Context Protocol server, with analytics that return answers
+  instead of raw data.
 
-tagline: Give your AI assistant a safe, read-only window into process data
+tagline: Give your AI assistant a safe, read-only window into your historian
 subtitle: >-
-  CSE ICON MCP servers connect Claude, Cursor, ChatGPT, and any other Model
-  Context Protocol client to your historian — with tag discovery, history,
-  events, and server-side analytics that return computed answers rather than
-  thousands of raw points.
+  CSE Historian MCP connects Claude, ChatGPT, Cursor, and any other Model
+  Context Protocol client to Canary Historian or AVEVA PI — with tag discovery,
+  history, events, and server-side analytics that return computed answers
+  rather than thousands of raw points.
 
 cta:
   heading: Ready to put AI to work on your process data?
-  body: Tell us which historian you run and we'll get you set up with a trial.
+  body: Tell us whether you run Canary, AVEVA PI, or both, and we'll set you up with a pilot.
   contactEmail: sales@cse-icon.com
 
-variantsHeading: Available servers
-variantsDescription: Jump to a specific server.
+variantsHeading: Supported historians
+variantsDescription: >-
+  Each server connects to one historian. Running both? Install one for each, and
+  your assistant can use them side by side.
 
 seo:
-  title: MCP Servers — AI access to your process historian
+  title: Historian MCP — AI access to Canary and AVEVA PI
   description: >-
-    Read-only Model Context Protocol servers from CSE ICON for Canary, AVEVA PI,
-    and Geo SCADA. Let AI assistants query process data in plain English, with
-    analytics that return answers instead of raw points.
+    CSE Historian MCP is a read-only Model Context Protocol server for Canary
+    Historian and AVEVA PI. Let AI assistants query process data in plain
+    English, with analytics that return answers instead of raw points.
 
 # No public board yet. To add one later, set enabled: true and point
 # projectNumber at the org project — nothing else needs to change.

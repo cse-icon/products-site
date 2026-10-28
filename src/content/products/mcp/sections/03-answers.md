@@ -7,15 +7,19 @@ description: >-
 icon: chart
 features:
   - title: Computed Verdicts
-    description: Baselines and statistical tests return a conclusion, not a spreadsheet.
-  - title: Fleet Comparison
-    description: Rank one metric across many assets in a single call to find the worst performer.
+    description: Baselines and statistical tests return a conclusion — normal, elevated, unusual, or extreme — not a spreadsheet.
+  - title: Fleet Rankings
+    description: Rank one metric across dozens of assets in a single call. Forty compressors come back as about 80 numbers, not 40 raw series.
   - title: Change Detection
-    description: Identify when a signal actually shifted, rather than eyeballing a trend.
-  - title: Correlation
-    description: Find which tags move together, and which move first.
-  - title: Efficient by Default
-    description: Large result sets are summarised server-side instead of flooding the assistant's context.
+    description: Find when a signal actually shifted, and whether its distribution changed, rather than eyeballing a trend.
+  - title: Correlation and Lag
+    description: Find which tags move together, and which one moves first.
+  - title: Scorecard Reports
+    description: Define a recurring report once as a template, then render it against fresh data on demand.
+  - title: Quality-Aware
+    description: Bad-quality points are left out before any statistic is calculated.
+  - title: Honest Answers
+    description: "\"Nothing happened\" and \"couldn't look\" are different results. Missing tags, partial windows, and unfinished checks are labelled."
   - title: Troubleshooting Tools
-    description: Answer "why is this tag returning nothing?" with a narrative diagnosis.
+    description: Answer "why is this tag returning nothing?" with a narrative diagnosis and a most-likely cause.
 ---

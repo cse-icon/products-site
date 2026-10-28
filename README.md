@@ -8,11 +8,8 @@ deployment, one product per URL slug.
 | Product | Path | Roadmap |
 |---|---|---|
 | InterLink | [/interlink](https://products.cse-icon.com/interlink) | Yes — org project #4 |
-| MCP Servers | `/mcp` | No |
-
-> **`/mcp` is currently drafted** (`draft: true` in its `product.yaml`) so it does
-> not publish. Its PI and Geo SCADA variants contain `TODO` placeholders that need
-> real copy first. See [docs/authoring-content.md](docs/authoring-content.md).
+| Historian MCP | [/mcp](https://products.cse-icon.com/mcp) | No |
+| Historian Bridge | [/historian-bridge](https://products.cse-icon.com/historian-bridge) | No |
 
 ---
 
@@ -132,10 +129,13 @@ products-site/
 │   │   ├── interlink/
 │   │   │   ├── product.yaml     # Identity, hero, CTA, SEO, roadmap opt-in
 │   │   │   └── sections/*.md    # Feature sections, ordered by filename
-│   │   └── mcp/
+│   │   ├── mcp/
+│   │   │   ├── product.yaml
+│   │   │   ├── sections/*.md
+│   │   │   └── variants/*.md    # Canary / PI anchored sections
+│   │   └── historian-bridge/
 │   │       ├── product.yaml
-│   │       ├── sections/*.md
-│   │       └── variants/*.md    # Canary / PI / Geo SCADA anchored sections
+│   │       └── sections/*.md
 │   ├── components/
 │   │   ├── FeatureCard.astro    # Single feature card
 │   │   ├── FeatureSection.astro # Section heading + grid of cards
@@ -437,8 +437,8 @@ cd api && npm install && cd ..
 npm run dev          # http://localhost:4321
 ```
 
-Drafted products build locally, so `npm run dev` is how you preview `/mcp` before
-publishing it.
+Drafted products build locally, so `npm run dev` is how you preview a product
+before publishing it.
 
 ### Vote API
 

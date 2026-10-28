@@ -134,10 +134,6 @@ sitemap — but it still builds, so you can preview it locally with `npm run dev
 Use it while copy is being written, then delete the line (or set it to `false`)
 to publish.
 
-> `src/content/products/mcp/` is currently drafted. Its `variants/pi.md` and
-> `variants/geo-scada.md` contain `TODO` placeholders that must be replaced with
-> real capabilities before it is published.
-
 ## Variants: one product, several flavours
 
 When a product ships in several flavours that share a platform, add a
