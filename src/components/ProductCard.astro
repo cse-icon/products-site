@@ -6,7 +6,7 @@ interface Props {
 }
 
 const { product } = Astro.props;
-const { name, shortDescription, roadmap } = product.data;
+const { name, shortDescription } = product.data;
 ---
 
 <a
@@ -29,9 +29,4 @@ const { name, shortDescription, roadmap } = product.data;
     </svg>
   </div>
   <p class="text-sm leading-relaxed text-[var(--color-text-muted)]">{shortDescription}</p>
-  {roadmap.enabled && (
-    <p class="mt-auto pt-1 text-xs font-medium text-[var(--color-text-muted)]">
-      Public roadmap &amp; feature voting
-    </p>
-  )}
 </a>

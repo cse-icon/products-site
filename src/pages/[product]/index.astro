@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
+import ChatDemo from '../../components/ChatDemo.astro';
+import FlowDiagram from '../../components/FlowDiagram.astro';
 import FeatureSection from '../../components/FeatureSection.astro';
 import ImageBreak from '../../components/ImageBreak.astro';
 import VariantSection from '../../components/VariantSection.astro';
@@ -30,6 +32,8 @@ const {
   subtitle,
   heroImage,
   endorsement,
+  diagram,
+  demo,
   cta,
   seo,
   roadmap,
@@ -57,11 +61,14 @@ const anchorFor = (id: string) =>
     backgroundImage={heroImage}
     primaryCta={
       roadmap.enabled
-        ? { label: 'View Roadmap', href: `/${product.id}/roadmap` }
+        ? { label: 'View roadmap', href: `/${product.id}/roadmap` }
         : undefined
     }
-    secondaryCta={{ label: 'Contact Sales', href: `mailto:${cta.contactEmail}` }}
+    secondaryCta={{ label: 'Contact sales', href: `mailto:${cta.contactEmail}` }}
   />
+
+  {diagram && <FlowDiagram steps={diagram.steps} caption={diagram.caption} />}
+  {demo && <ChatDemo exchanges={demo} />}
 
   {sections.map((section, i) => (
     <>
@@ -129,14 +136,14 @@ const anchorFor = (id: string) =>
             href={`/${product.id}/roadmap`}
             class="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-brand-700 shadow-lg transition-all hover:bg-brand-50"
           >
-            View Roadmap
+            View roadmap
           </a>
         )}
         <a
           href={`mailto:${cta.contactEmail}`}
           class="inline-flex items-center gap-2 rounded-lg border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10"
         >
-          Contact Sales
+          Contact sales
         </a>
       </div>
     </div>

@@ -89,6 +89,47 @@ const products = defineCollection({
         caption: z.string().min(1),
       })
       .optional(),
+    /** Shorter name for the nav on phones, where the full name won't fit. Defaults to `name`. */
+    navName: z.string().min(1).optional(),
+    /** Optional animated left-to-right architecture flow shown under the hero. */
+    diagram: z
+      .object({
+        steps: z
+          .array(
+            z.object({
+              title: z.string().min(1),
+              detail: z.string().min(1),
+              /** Label on the arrow leading to the next step. */
+              edge: z.string().optional(),
+            }),
+          )
+          .min(2),
+        caption: z.string().optional(),
+      })
+      .optional(),
+    /** Optional animated chat shown under the hero, cycling through each exchange. */
+    demo: z
+      .array(
+        z.object({
+          question: z.string().min(1),
+          /** Tool category shown as a "working" chip before the answer. */
+          tool: z.string().min(1),
+          answer: z.string().min(1),
+          /** Optional chart the assistant "draws" under its answer. */
+          chart: z
+            .object({
+              type: z.enum(['line', 'bar']),
+              values: z.array(z.number()).min(2),
+              labels: z.array(z.string()).optional(),
+              /** Line charts only: a horizontal reference line, e.g. a baseline or limit. */
+              reference: z.number().optional(),
+              caption: z.string().optional(),
+            })
+            .optional(),
+        }),
+      )
+      .min(1)
+      .optional(),
     cta: z.object({
       heading: z.string().min(1),
       body: z.string().min(1),

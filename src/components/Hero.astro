@@ -20,7 +20,7 @@ const { title, tagline, subtitle, backgroundImage, primaryCta, secondaryCta } = 
 
 <section class="relative overflow-hidden">
   <div class="absolute inset-0 -z-10">
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-accent-50 dark:from-brand-950/50 dark:via-slate-900 dark:to-slate-900"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-slate-50 dark:from-brand-950/50 dark:via-slate-900 dark:to-slate-900"></div>
     {backgroundImage && (
       <img
         src={backgroundImage}
@@ -30,13 +30,13 @@ const { title, tagline, subtitle, backgroundImage, primaryCta, secondaryCta } = 
       />
     )}
     <div class="absolute right-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-brand-400/10 blur-3xl dark:bg-brand-600/10"></div>
-    <div class="absolute bottom-0 left-0 -z-10 h-[400px] w-[400px] rounded-full bg-accent-400/10 blur-3xl dark:bg-accent-600/10"></div>
+    <div class="absolute bottom-0 left-0 -z-10 h-[400px] w-[400px] rounded-full bg-brand-300/10 blur-3xl dark:bg-brand-700/10"></div>
   </div>
 
   <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
     <div class="mx-auto max-w-3xl text-center">
       <h1 class="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-        <span class="bg-gradient-to-r from-brand-600 to-accent-500 bg-clip-text text-transparent dark:from-brand-400 dark:to-accent-400">
+        <span class="text-brand-600 dark:text-brand-400">
           {title}
         </span>
       </h1>

@@ -8,11 +8,9 @@ deployment, one product per URL slug.
 | Product | Path | Roadmap |
 |---|---|---|
 | InterLink | [/interlink](https://products.cse-icon.com/interlink) | Yes — org project #4 |
-| MCP Servers | `/mcp` | No |
-
-> **`/mcp` is currently drafted** (`draft: true` in its `product.yaml`) so it does
-> not publish. Its PI and Geo SCADA variants contain `TODO` placeholders that need
-> real copy first. See [docs/authoring-content.md](docs/authoring-content.md).
+| MCP for Historians | [/historian-mcp](https://products.cse-icon.com/historian-mcp) | No |
+| MCP for Geo SCADA | [/geoscada-mcp](https://products.cse-icon.com/geoscada-mcp) | No |
+| Historian Bridge | [/historian-bridge](https://products.cse-icon.com/historian-bridge) | No |
 
 ---
 
@@ -52,7 +50,7 @@ committed to the repo as JSON. The only live backend is the vote API.
 │  ┌──────────────┐    ┌──────────────┐    ┌────────────────────────┐  │
 │  │ Main branch  │───▶│ GitHub Pages │───▶│ Static site            │  │
 │  │ (push)       │    │ (deploy)     │    │ Astro 6 + Tailwind 4   │  │
-│  └──────────────┘    └──────────────┘    │ /  /interlink  /mcp    │  │
+│  └──────────────┘    └──────────────┘    │ /  /<product-slug>     │  │
 │         │                                └───────────┬────────────┘  │
 │         │ (api/ changes)                             │ (votes)       │
 │         ▼                                            ▼               │
@@ -132,10 +130,16 @@ products-site/
 │   │   ├── interlink/
 │   │   │   ├── product.yaml     # Identity, hero, CTA, SEO, roadmap opt-in
 │   │   │   └── sections/*.md    # Feature sections, ordered by filename
-│   │   └── mcp/
+│   │   ├── historian-mcp/
+│   │   │   ├── product.yaml
+│   │   │   ├── sections/*.md
+│   │   │   └── variants/*.md    # Canary / PI anchored sections
+│   │   ├── geoscada-mcp/
+│   │   │   ├── product.yaml
+│   │   │   └── sections/*.md
+│   │   └── historian-bridge/
 │   │       ├── product.yaml
-│   │       ├── sections/*.md
-│   │       └── variants/*.md    # Canary / PI / Geo SCADA anchored sections
+│   │       └── sections/*.md
 │   ├── components/
 │   │   ├── FeatureCard.astro    # Single feature card
 │   │   ├── FeatureSection.astro # Section heading + grid of cards
@@ -437,8 +441,8 @@ cd api && npm install && cd ..
 npm run dev          # http://localhost:4321
 ```
 
-Drafted products build locally, so `npm run dev` is how you preview `/mcp` before
-publishing it.
+Drafted products build locally, so `npm run dev` is how you preview a product
+before publishing it.
 
 ### Vote API
 
