@@ -2,8 +2,8 @@
 
 All product copy on `products.cse-icon.com` lives in text files under
 `src/content/products/`. You do not need to install anything or write code —
-GitHub's web editor is enough. Every change you push to `main` rebuilds and
-publishes the site in about a minute.
+GitHub's web editor is enough. Every change goes in through a pull request, and
+once it is merged the site rebuilds and publishes in about a minute.
 
 ## How a product is put together
 
@@ -32,8 +32,12 @@ left/right. That is why they are numbered — to reorder them, renumber the file
 1. Open the file on GitHub, e.g.
    `src/content/products/interlink/sections/01-data-archive.md`.
 2. Click the pencil icon.
-3. Edit the text, then **Commit changes** to `main`.
-4. Watch **Actions → Deploy Site**. When it is green, the change is live.
+3. Edit the text, then **Commit changes**. `main` is protected, so GitHub offers
+   to create a branch and start a pull request — accept, then **Create pull
+   request**.
+4. Wait for the checks on the pull request to go green (about two minutes), then
+   **Merge pull request**.
+5. Watch **Actions → Deploy Site**. When it is green, the change is live.
 
 ### What a section file looks like
 
@@ -204,8 +208,10 @@ For the board fields the sync expects, see **Roadmap Sync** in the
 ## If the build fails
 
 The site will not publish content that does not match the expected shape — which
-means a mistake here can't break the live site. Open **Actions**, click the red
-run, and read the error: it names the file and the field.
+means a mistake here can't break the live site. A check on your pull request goes
+red and the merge button stays blocked. Click **Details** next to the red check
+and read the error: it names the file and the field. Fix the file on the same
+branch, and the checks run again.
 
 | Message | Cause |
 | --- | --- |

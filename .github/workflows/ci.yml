@@ -1,0 +1,79 @@
+name: CI
+
+# Required checks for merging to main. The ruleset on main requires each job
+# below by its `name:`, so renaming a job, or adding one that must block
+# merges, also needs the ruleset updated — see "Branch protection" in README.md.
+#
+# No path filters: a required check that never starts leaves the PR blocked.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Site helpers, roadmap validation (including the committed roadmap
+      # JSON), and the vote API's email handling.
+      - run: npm test
+
+      # sync-roadmap.mjs loads src/lib/roadmap.ts through Node's type stripping,
+      # which rejects non-erasable syntax such as enums. Vitest compiles
+      # TypeScript itself, so it would not catch that.
+      - name: Roadmap helpers load in plain Node
+        run: node --input-type=module -e "await import('./scripts/roadmap-helpers.mjs')"
+
+  site:
+    name: Build site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # astro check + astro build: type errors and content schema violations.
+      - run: npm run build
+
+  api:
+    name: Build vote API
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - run: npm ci
+      - run: npm run build
