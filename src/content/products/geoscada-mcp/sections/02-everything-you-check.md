@@ -20,5 +20,5 @@ features:
   - title: Analysis
     description: Find gaps in a point's data, detect when a signal shifted, and compare a value against its own baseline.
   - title: Knowledge Base
-    description: Field notes measured on live systems, plus the AVEVA help installed with your Geo SCADA, searched in place.
+    description: Field notes measured on live systems, plus the Schneider Electric help installed with your Geo SCADA, searched in place.
 ---

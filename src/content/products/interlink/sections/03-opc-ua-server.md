@@ -8,7 +8,7 @@ features:
   - title: Security
     description: Basic256Sha256 with SignAndEncrypt.
   - title: Dynamic Namespaces
-    description: Each Data Archive and AF Server gets its own OPC UA namespace, auto-populated.
+    description: Each AVEVA PI Data Archive and AVEVA PI AF Server gets its own OPC UA namespace, auto-populated.
   - title: Lazy Hierarchy Loading
     description: Deep hierarchies populate on-demand for fast startup.
   - title: Certificate Management

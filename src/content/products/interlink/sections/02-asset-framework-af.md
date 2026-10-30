@@ -1,6 +1,6 @@
 ---
-title: Asset Framework (AF)
-description: Navigate AF hierarchies and expose attributes as OPC UA nodes.
+title: AVEVA PI Asset Framework
+description: Navigate AVEVA PI Asset Framework hierarchies and expose attributes as OPC UA nodes.
 icon: hierarchy
 features:
   - title: Full Hierarchy Browsing
@@ -8,7 +8,7 @@ features:
   - title: Easy Direct Add
     description: Node ID is the AF Path.
   - title: Multi-Server Support
-    description: Connect to multiple AF servers simultaneously.
+    description: Connect to multiple AVEVA PI AF Server instances simultaneously.
   - title: Attribute Subscriptions
     description: Real-time value change notifications on AF attributes.
   - title: Historical Reads

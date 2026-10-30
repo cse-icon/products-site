@@ -17,8 +17,8 @@ features:
     description: Machine-bound licenses with RSA signature validation.
 imageBreakAfter:
   src: /images/historical-data.webp
-  alt: Historical data shown identically in PI and OPC UA
-  caption: Historical data reads return identical results whether accessed through PI or OPC UA
+  alt: Historical data shown identically in AVEVA PI System and OPC UA
+  caption: Historical data reads return identical results whether accessed through AVEVA PI System or OPC UA
   variant: contained
   background: light
 ---

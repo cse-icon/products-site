@@ -1,20 +1,21 @@
-# Geo SCADA MCP
+# MCP for Geo SCADA
 #
 # Copy is written from cse-icon/GeoSCADA-MCP. It runs locally on the user's
 # machine over stdio, one server entry per Geo SCADA system.
 # See docs/authoring-content.md.
 
-name: Geo SCADA MCP
+name: MCP for Geo SCADA
 order: 30
 shortDescription: >-
-  Troubleshoot AVEVA Geo SCADA Expert by asking your AI assistant. A read-only
+  Troubleshoot Schneider Electric Geo SCADA (fka. ClearSCADA) by asking your AI assistant. A read-only
   Model Context Protocol server that answers "why is this point stale?" from
   the live system, with the evidence behind the answer.
 
-tagline: Ask Geo SCADA why — and get one answer from the live system
+tagline: Ask Geo SCADA (fka. ClearSCADA) why — and get one answer from the live system
 subtitle: >-
-  CSE ICON Geo SCADA MCP connects Claude, Cursor, and any other Model Context
-  Protocol client to AVEVA Geo SCADA Expert (ClearSCADA). Ask why a point has
+  CSE ICON's MCP for Geo SCADA is a Model Context Protocol (MCP) server that
+  connects Claude, Cursor, and any other MCP client to Schneider Electric Geo
+  SCADA. Ask why a point has
   been stale since 3am and get one answer assembled from configuration,
   history, alarms, comms, and the audit trail, instead of pivoting between
   ViewX, the alarm list, the config audit, and the historic viewer.
@@ -25,10 +26,10 @@ cta:
   contactEmail: sales@cse-icon.com
 
 seo:
-  title: Geo SCADA MCP — AI troubleshooting for AVEVA Geo SCADA Expert
+  title: MCP for Geo SCADA — AI troubleshooting from CSE ICON
   description: >-
-    A read-only Model Context Protocol server from CSE ICON for AVEVA Geo SCADA
-    Expert. Ask an AI assistant why a point is stale, why an alarm didn't fire,
+    A read-only Model Context Protocol server from CSE ICON for Schneider
+    Electric Geo SCADA. Ask an AI assistant why a point is stale, why an alarm didn't fire,
     or whether comms are to blame, and get an answer from the live system.
 
 # No public board yet. To add one later, set enabled: true and point

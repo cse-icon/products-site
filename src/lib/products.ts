@@ -54,11 +54,13 @@ export interface NavLink {
 }
 
 /**
- * Nav links for a product. Roadmap only appears when the product opted in,
- * so a product without a board never shows a link to an empty page.
+ * Nav links for a product. The product name beside the logo already links to
+ * its page, so there is no separate link for it. Roadmap only appears when the
+ * product opted in, so a product without a board never shows a link to an
+ * empty page.
  */
 export function navFor(product: Product): NavLink[] {
-  const links: NavLink[] = [{ label: 'Features', href: `/${product.id}` }];
+  const links: NavLink[] = [];
   if (product.data.roadmap.enabled) {
     links.push({ label: 'Roadmap', href: `/${product.id}/roadmap` });
   }

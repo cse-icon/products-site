@@ -19,7 +19,7 @@ features:
   - title: Failures Contained
     description: Tags that fail to read are held back on their own. Every other tag still publishes.
   - title: Read-Only on the Historian
-    description: Uses scoped, read-only tokens and never writes to Canary. It backs off automatically when the historian is slow to respond.
+    description: Uses scoped, read-only tokens and never writes to Canary Historian. It backs off automatically when the historian is slow to respond.
   - title: Independently Verified
     description: A built-in check reconciles published data against Canary's separate Web API, on a sample of tags.
 ---

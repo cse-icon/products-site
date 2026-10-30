@@ -1,8 +1,8 @@
 ---
 title: Ask in Plain English
 description: >-
-  A Model Context Protocol server that lets AI assistants query your Canary or
-  AVEVA PI historian directly — no SQL, no schema to learn, no export step.
+  An MCP server that lets AI assistants query your Canary Historian or AVEVA
+  PI System directly — no SQL, no schema to learn, no export step.
 icon: sparkles
 features:
   - title: Works With the Assistants You Use
@@ -10,7 +10,7 @@ features:
   - title: Speaks Process Data
     description: Tags, asset models, alarms, batches, and quality codes — not a generic SQL gateway.
   - title: Same Tools on Either Historian
-    description: Discovery, history, analytics, and reports work the same way on Canary and AVEVA PI, so prompts carry across.
+    description: Discovery, history, analytics, and reports work the same way on Canary Historian and AVEVA PI System, so prompts carry across.
   - title: No Exports, No Copies
     description: Answers come straight from the live historian. Only what the assistant is shown leaves your network, to the AI service you choose.
   - title: Discovery Built In

@@ -8,7 +8,7 @@ features:
   - title: Raw Readings
     description: Every value, timestamp, and quality code, one row per reading.
   - title: Server-Side Aggregates
-    description: Or let Canary compute them, such as 10-minute time-weighted averages, and publish one row per interval.
+    description: Or let Canary Historian compute them, such as 10-minute time-weighted averages, and publish one row per interval.
   - title: Tag Metadata
     description: A daily snapshot of every tag and all its Canary properties, with the ones you choose promoted to columns.
   - title: Events

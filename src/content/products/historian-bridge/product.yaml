@@ -14,7 +14,7 @@ shortDescription: >-
 
 tagline: Your historian data in your data platform — complete, current, and in open formats
 subtitle: >-
-  CSE Historian Bridge reads Canary Historian on a schedule and publishes
+  CSE ICON's Historian Bridge reads Canary Historian on a schedule and publishes
   readings or aggregates, tag properties, and events to Azure Blob Storage as
   Apache Parquet files registered as Apache Iceberg tables. It feeds Snowflake
   in production today, and because nothing in the output is Snowflake-specific,
@@ -29,7 +29,7 @@ cta:
 seo:
   title: Historian Bridge — Canary data in Snowflake and your data lake
   description: >-
-    CSE Historian Bridge continuously publishes Canary Historian readings,
+    CSE ICON's Historian Bridge continuously publishes Canary Historian readings,
     aggregates, tag metadata, and events as Parquet files and Apache Iceberg
     tables in Azure Blob Storage, ready for Snowflake and any tool that reads
     open formats.

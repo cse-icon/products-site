@@ -18,7 +18,7 @@ features:
   - title: Offline Licensing
     description: One licence per machine, dated or perpetual, checked on the machine itself. Nothing calls home.
   - title: What You Need
-    description: Verified on Geo SCADA Expert 2023. Needs the Data Access components installed with ViewX and a read-only Geo SCADA account.
+    description: Verified on Geo SCADA 2023. Needs the Data Access components installed with ViewX and a read-only Geo SCADA account.
   - title: Signed and Verifiable
     description: The executable and its ODBC component are code-signed by CSE ICON and timestamped.
 ---

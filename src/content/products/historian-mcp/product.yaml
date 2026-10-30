@@ -1,26 +1,30 @@
-# Historian MCP
+# MCP for Historians
 #
 # One server per historian. variants/ holds what is specific to Canary or to
 # AVEVA PI; sections/ holds only what is true of both. Copy is written from
 # cse-icon/CSE-Historian-MCP. See docs/authoring-content.md.
 
-name: Historian MCP
+name: MCP for Historians
 order: 20
 shortDescription: >-
-  Let AI assistants query your Canary or AVEVA PI historian in plain English. A
-  read-only Model Context Protocol server, with analytics that return answers
-  instead of raw data.
+  Let AI assistants query your Canary Historian or AVEVA PI System in plain
+  English. A read-only Model Context Protocol server, with analytics that
+  return answers instead of raw data.
 
 tagline: Give your AI assistant a safe, read-only window into your historian
 subtitle: >-
-  CSE Historian MCP connects Claude, ChatGPT, Cursor, and any other Model
-  Context Protocol client to Canary Historian or AVEVA PI — with tag discovery,
+  CSE ICON's MCP for Historians is a Model Context Protocol (MCP) server that
+  connects Claude, ChatGPT, Cursor, and any other MCP client to Canary
+  Historian or AVEVA™ PI System — with tag discovery,
   history, events, and server-side analytics that return computed answers
   rather than thousands of raw points.
 
 cta:
   heading: Ready to put AI to work on your process data?
-  body: Tell us whether you run Canary, AVEVA PI, or both, and we'll set you up with a pilot.
+  body: >-
+    Tell us whether you run Canary Historian, AVEVA PI System, or both, and
+    we'll set you up with a pilot. Don't see the historian you use listed?
+    Contact us and let's discuss developing an MCP server that meets your needs.
   contactEmail: sales@cse-icon.com
 
 variantsHeading: Supported historians
@@ -29,10 +33,10 @@ variantsDescription: >-
   your assistant can use them side by side.
 
 seo:
-  title: Historian MCP — AI access to Canary and AVEVA PI
+  title: MCP for Historians — AI access to Canary and AVEVA PI System
   description: >-
-    CSE Historian MCP is a read-only Model Context Protocol server for Canary
-    Historian and AVEVA PI. Let AI assistants query process data in plain
+    CSE ICON's MCP for Historians is a read-only Model Context Protocol server for Canary
+    Historian and AVEVA PI System. Let AI assistants query process data in plain
     English, with analytics that return answers instead of raw points.
 
 # No public board yet. To add one later, set enabled: true and point

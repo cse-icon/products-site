@@ -8,8 +8,8 @@ deployment, one product per URL slug.
 | Product | Path | Roadmap |
 |---|---|---|
 | InterLink | [/interlink](https://products.cse-icon.com/interlink) | Yes — org project #4 |
-| Historian MCP | [/historian-mcp](https://products.cse-icon.com/historian-mcp) | No |
-| Geo SCADA MCP | [/geoscada-mcp](https://products.cse-icon.com/geoscada-mcp) | No |
+| MCP for Historians | [/historian-mcp](https://products.cse-icon.com/historian-mcp) | No |
+| MCP for Geo SCADA | [/geoscada-mcp](https://products.cse-icon.com/geoscada-mcp) | No |
 | Historian Bridge | [/historian-bridge](https://products.cse-icon.com/historian-bridge) | No |
 
 ---

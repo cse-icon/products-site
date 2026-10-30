@@ -9,7 +9,7 @@ features:
   - title: No Write Path
     description: No tool can write a value, change historian configuration, or acknowledge an alarm.
   - title: Your Permissions Apply
-    description: On Canary, each person signs in with their own API token and sees only what it can see. On AVEVA PI, reads run as a service account you control.
+    description: On Canary Historian, each person signs in with their own API token and sees only what it can see. On AVEVA PI System, reads run as a service account you control.
   - title: Role-Based Access
     description: Read-only, operator, and administrator roles gate live data, diagnostics, and access management. Grant a role without a restart.
   - title: Single Sign-On

@@ -16,7 +16,7 @@ highlights:
   - title: Condition Scans
     description: Find every excursion of a threshold expression, such as discharge pressure above 75, across an entire asset type.
   - title: Historian Health
-    description: Check the historian's own subsystems, such as storage, archiving, and collector connections, from Canary's diagnostic view.
+    description: Check the historian's own subsystems, such as storage, archiving, and collector connections, from Canary Historian's diagnostic view.
   - title: Live Data
     description: Poll current values for a scoped set of tags, for operators and above.
   - title: Built-In Product Knowledge
@@ -25,4 +25,4 @@ highlights:
 
 Connects over the Canary Views API and requires Canary System 25.4 or later.
 Each person signs in with their own Canary API token, so the server never
-widens what a user can already see in Canary.
+widens what a user can already see in Canary Historian.

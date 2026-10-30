@@ -9,7 +9,7 @@ features:
   - title: Single Executable
     description: One self-contained Windows executable that carries its own runtime. Nothing else to install.
   - title: Guided Install
-    description: A signed setup wizard installs the Windows service, certificate, firewall rule, and permissions, for Canary or PI.
+    description: A signed setup wizard installs the Windows service, certificate, firewall rule, and permissions, for Canary Historian or AVEVA PI System.
   - title: Operator Portal
     description: A browser portal on the server for settings, access, activity, diagnostics, and licensing. Every settings change is reviewed and backed up.
   - title: Private by Default
