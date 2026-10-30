@@ -1,7 +1,7 @@
 name: InterLink
 order: 10
 shortDescription: >-
-  Bridge your AVEVA™ PI System to any OPC UA client. Exposes AVEVA PI Data
+  Bridge your AVEVA PI System to any OPC UA client. Exposes AVEVA PI Data
   Archive points and AVEVA PI Asset Framework attributes as a
   standards-compliant OPC UA server, with enterprise security and zero-code
   configuration.

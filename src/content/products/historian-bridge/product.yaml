@@ -8,7 +8,7 @@ name: Historian Bridge
 navName: Bridge
 order: 40
 shortDescription: >-
-  Canary Historian™ data in Snowflake® and your data lake, as open Apache Parquet™ and Apache Iceberg™ tables.
+  Canary Historian data in Snowflake and your data lake, as open Apache Parquet™ and Apache Iceberg™ tables.
 
 tagline: Canary Historian™ data in Snowflake® and your data lake, with no gaps and no code
 subtitle: >-

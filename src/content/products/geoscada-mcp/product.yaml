@@ -4,13 +4,13 @@
 # machine over stdio, one server entry per Geo SCADA system.
 # See docs/authoring-content.md.
 
-name: MCP for Geo SCADA™
+name: MCP for Geo SCADA
 navName: Geo SCADA MCP
 order: 30
 shortDescription: >-
-  Troubleshoot Schneider Electric Geo SCADA™, formerly ClearSCADA™, by asking your AI assistant.
+  Troubleshoot Schneider Electric Geo SCADA, formerly ClearSCADA™, by asking your AI assistant.
 
-tagline: Ask Geo SCADA why, and get one answer from the live system
+tagline: Ask Geo SCADA™ why, and get one answer from the live system
 subtitle: >-
   A read-only Model Context Protocol (MCP) server for Schneider Electric Geo SCADA, formerly ClearSCADA™. One answer from config, history, alarms, comms, and audit, instead of five screens in ViewX™.
 
