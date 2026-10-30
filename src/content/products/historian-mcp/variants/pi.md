@@ -3,33 +3,26 @@ name: AVEVA PI System
 anchor: pi
 order: 20
 icon: hierarchy
-tagline: Ask your AVEVA PI System anything — AVEVA PI Data Archive points, AF hierarchies, event frames, and AVEVA PI Vision displays.
+tagline: AVEVA PI Data Archive points, AF hierarchies, event frames, and AVEVA PI Vision displays.
 highlights:
-  - title: Points and Attributes
-    description: Search PI points and AF attributes by keyword, and read their properties, units, and data span.
-  - title: AF Navigation
+  - title: Points and attributes
+    description: Search PI points and AF attributes by keyword and see their units and data span.
+  - title: AF navigation
     description: Browse AF databases and elements, and compare elements built from the same template.
-  - title: History & Summaries
-    description: Read archived values or AVEVA PI System's own summaries such as Average, with quality and system states decoded.
-  - title: Event Frames & Batches
-    description: Read AF event frames by template and severity, with the templates you choose surfaced as batches.
-  - title: Calc Failed, Explained
-    description: Trace a bad AF attribute to the analyses that write it, their inputs, and the most likely cause.
-  - title: AVEVA PI Vision Displays
-    description: Find which displays use a point or element, and check whether their AF bindings still resolve.
-  - title: Live Data
+  - title: History & summaries
+    description: Read archived values or PI's own summaries, with quality and system states decoded.
+  - title: Event frames & batches
+    description: Read event frames by template and severity, with the templates you choose shown as batches.
+  - title: Calc Failed, explained
+    description: Trace a bad AF attribute back to the analysis that writes it and the most likely cause.
+  - title: AVEVA PI Vision displays
+    description: Find which displays use a point, and check whether their bindings still resolve.
+  - title: Live data
     description: Poll current values for a chosen set of points or attributes, for operators and above.
-  - title: Scoped to Your AF Databases
-    description: Limit which AF databases users can reach. Everything else is hidden from listings and refused.
+  - title: Scoped to your AF databases
+    description: Choose which AF databases users can reach. Everything else stays hidden.
 ---
 
-Reads AVEVA PI System through the AVEVA PI AF SDK on the server, so AVEVA PI
-Web API is not required. The server machine needs the AVEVA PI AF SDK (AVEVA PI
-AF Client) and network access to your AVEVA PI Data Archive and AVEVA PI AF
-Server. Reads run as the service's Windows account, so AVEVA PI System security
-for that account sets what the server can see. Users sign in with
-personal access tokens issued in the operator portal, which name each person in
-the audit log, or through your identity provider.
+Reads through the AVEVA PI AF SDK, so AVEVA PI Web API is not required. Reads run as the service's Windows account, so your existing PI security for that account controls what the server can see. Users sign in with personal access tokens from the operator portal, so the audit log names each person, or through your identity provider.
 
-The AVEVA PI Vision tools are optional and need AVEVA PI Vision 2021 or later, with the
-service account as a PI Vision Utility User.
+AVEVA PI Vision tools need AVEVA PI Vision 2021 or later.

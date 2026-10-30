@@ -3,26 +3,24 @@ name: Canary
 anchor: canary
 order: 10
 icon: database
-tagline: Ask your Canary Historian anything — tag discovery, history, events, asset models, and fleet analytics.
+tagline: Tag discovery, history, events, asset models, and fleet analytics on Canary Historian.
 highlights:
-  - title: Model-Aware Tag Search
-    description: Search across every view at once, with each result flagged for whether it actually holds data.
-  - title: Hierarchy Navigation
-    description: Walk dataset, node, and tag structure, or step through very large hierarchies a level at a time.
-  - title: History & Events
-    description: Read historic values, alarms, system events, operator annotations, and structured batch or campaign events.
-  - title: Asset Model
-    description: Query virtual views, asset types, and asset instances to compare like equipment with like.
-  - title: Condition Scans
-    description: Find every excursion of a threshold expression, such as discharge pressure above 75, across an entire asset type.
-  - title: Historian Health
-    description: Check the historian's own subsystems, such as storage, archiving, and collector connections, from Canary Historian's diagnostic view.
-  - title: Live Data
-    description: Poll current values for a scoped set of tags, for operators and above.
-  - title: Built-In Product Knowledge
-    description: An embedded Canary knowledge base, so assistants can answer configuration and troubleshooting questions too.
+  - title: Model-aware tag search
+    description: Search every view at once, with each result flagged for whether it actually holds data.
+  - title: Hierarchy navigation
+    description: Walk datasets, nodes, and tags, even in very large hierarchies.
+  - title: History & events
+    description: Read historic values, alarms, operator annotations, and batch or campaign events.
+  - title: Asset model
+    description: Query asset types and instances to compare like equipment with like.
+  - title: Condition scans
+    description: Find every time a condition held, like discharge pressure above 75, across a whole asset type.
+  - title: Historian health
+    description: Check storage, archiving, and collector connections from Canary's own diagnostics.
+  - title: Live data
+    description: Poll current values for a chosen set of tags, for operators and above.
+  - title: Built-in product knowledge
+    description: An embedded Canary knowledge base answers configuration and troubleshooting questions too.
 ---
 
-Connects over the Canary Views API and requires Canary System 25.4 or later.
-Each person signs in with their own Canary API token, so the server never
-widens what a user can already see in Canary Historian.
+Requires Canary System 25.4 or later. Each person signs in with their own Canary API token, so the server never shows anyone more than they can already see in Canary.

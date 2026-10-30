@@ -1,24 +1,20 @@
 ---
-title: Ask in Plain English
+title: Ask in plain English
 description: >-
-  An MCP server that lets AI assistants query your Canary Historian or AVEVA
-  PI System directly — no SQL, no schema to learn, no export step.
+  Ask your historian questions from the AI assistant you already use. No SQL,
+  no exports.
 icon: sparkles
 features:
-  - title: Works With the Assistants You Use
-    description: Claude Desktop, Claude Code, claude.ai, Cursor, ChatGPT custom connectors, Codex CLI — any MCP client.
-  - title: Speaks Process Data
-    description: Tags, asset models, alarms, batches, and quality codes — not a generic SQL gateway.
-  - title: Same Tools on Either Historian
-    description: Discovery, history, analytics, and reports work the same way on Canary Historian and AVEVA PI System, so prompts carry across.
-  - title: No Exports, No Copies
-    description: Answers come straight from the live historian. Only what the assistant is shown leaves your network, to the AI service you choose.
-  - title: Discovery Built In
-    description: Assistants find the right tags themselves, including whether a tag actually has data.
-  - title: Guided Workflows
-    description: Ready-made prompts for routine jobs like a morning summary, a comparison with yesterday, or failing-tag triage.
-  - title: Self-Documenting
-    description: The server explains its own tools and concepts, so assistants use it correctly without hand-holding.
-  - title: Plant Documents, Too
-    description: An optional companion server adds P&ID, procedure, datasheet, and equipment-dossier lookups beside the historian data.
+  - title: Works with your assistant
+    description: Claude, ChatGPT, Cursor, Codex, or any other MCP client, so your team keeps the tools they already know.
+  - title: Built for process data
+    description: Understands tags, asset models, alarms, batches, and quality codes, not just generic tables.
+  - title: One toolset, two historians
+    description: The same prompts work on Canary and AVEVA PI, so sites on different historians ask questions the same way.
+  - title: Live data, no copies
+    description: Answers come straight from your historian, with no exports or extra copies of your data to manage.
+  - title: Guided workflows
+    description: Ready-made prompts for a morning summary, a comparison with yesterday, or triaging a failing tag.
+  - title: Plant documents, too
+    description: An optional add-on looks up P&IDs, procedures, and datasheets alongside the process data.
 ---

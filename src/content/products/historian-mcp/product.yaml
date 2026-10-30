@@ -5,26 +5,55 @@
 # cse-icon/CSE-Historian-MCP. See docs/authoring-content.md.
 
 name: MCP for Historians
+navName: Historian MCP
 order: 20
 shortDescription: >-
-  Let AI assistants query your Canary Historian or AVEVA PI System in plain
-  English. A read-only Model Context Protocol server, with analytics that
-  return answers instead of raw data.
+  Ask your Canary Historian™ or AVEVA™ PI System questions in plain English, from the AI assistant you already use.
 
 tagline: Give your AI assistant a safe, read-only window into your historian
 subtitle: >-
-  CSE ICON's MCP for Historians is a Model Context Protocol (MCP) server that
-  connects Claude, ChatGPT, Cursor, and any other MCP client to Canary
-  Historian or AVEVA™ PI System — with tag discovery,
-  history, events, and server-side analytics that return computed answers
-  rather than thousands of raw points.
+  A read-only Model Context Protocol (MCP) server that connects Claude, ChatGPT, and Cursor to Canary Historian™ or AVEVA™ PI System, with analytics that return answers instead of raw data.
+
+demo:
+  - question: Is Compressor 3 discharge pressure running high this week?
+    tool: Comparing against 30-day baseline
+    answer: >-
+      Yes, it's unusual. It averaged 82.4 psi against a baseline of 76.1 psi,
+      and started climbing Tuesday around 14:00.
+    chart:
+      type: line
+      values: [76, 75.5, 76.4, 76, 77.8, 80.6, 82.1, 83, 82.7, 83.4]
+      labels: [Sun, Tue, Thu, Sat]
+      reference: 76.1
+      caption: Discharge pressure (psi), dashed line is the baseline
+  - question: Which pumps had the most vibration yesterday?
+    tool: Ranking 40 pumps
+    answer: >-
+      P-104 was highest at 0.42 in/s, about twice the fleet median. P-221 and
+      P-117 were next. The other 37 were normal.
+    chart:
+      type: bar
+      values: [0.42, 0.31, 0.29, 0.22, 0.21, 0.2]
+      labels: [P-104, P-221, P-117, P-305, P-112, P-208]
+      caption: Peak vibration (in/s RMS)
+  - question: When did Tank 2 go above 90% last month?
+    tool: Scanning for excursions
+    answer: >-
+      Three times, on the 4th, 17th, and 26th. The longest lasted 3.5 hours and
+      lined up with P-201 being offline.
+  - question: Why is FT-310 returning nothing?
+    tool: Diagnosing tag
+    answer: >-
+      The tag exists but stopped receiving data on the 12th at 06:15. The
+      collector for that area is disconnected, so the other 214 tags on it are
+      affected too.
 
 cta:
   heading: Ready to put AI to work on your process data?
   body: >-
     Tell us whether you run Canary Historian, AVEVA PI System, or both, and
-    we'll set you up with a pilot. Don't see the historian you use listed?
-    Contact us and let's discuss developing an MCP server that meets your needs.
+    we'll set you up with a pilot. Don't see your historian listed? Contact us
+    and let's discuss developing an MCP server that meets your needs.
   contactEmail: sales@cse-icon.com
 
 variantsHeading: Supported historians
@@ -33,7 +62,7 @@ variantsDescription: >-
   your assistant can use them side by side.
 
 seo:
-  title: MCP for Historians — AI access to Canary and AVEVA PI System
+  title: MCP for Historians | AI access to Canary and AVEVA PI System
   description: >-
     CSE ICON's MCP for Historians is a read-only Model Context Protocol server for Canary
     Historian and AVEVA PI System. Let AI assistants query process data in plain

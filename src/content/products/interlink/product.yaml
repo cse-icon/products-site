@@ -6,7 +6,7 @@ shortDescription: >-
   standards-compliant OPC UA server, with enterprise security and zero-code
   configuration.
 
-tagline: Bridge your AVEVA™ PI System to any OPC UA client — securely, in minutes
+tagline: Bridge your AVEVA™ PI System to any OPC UA client, securely, in minutes
 subtitle: >-
   CSE ICON's InterLink connects AVEVA PI Data Archive and AVEVA PI Asset Framework
   to the OPC UA ecosystem with enterprise security, real-time subscriptions, and
@@ -24,9 +24,9 @@ cta:
   contactEmail: sales@cse-icon.com
 
 seo:
-  title: InterLink — Bridge AVEVA PI System to OPC UA
+  title: InterLink | Bridge AVEVA PI System to OPC UA
   description: >-
-    CSE ICON's InterLink — bridge your AVEVA PI System to any OPC UA client with
+    CSE ICON's InterLink bridges your AVEVA PI System to any OPC UA client with
     enterprise security, real-time subscriptions, and zero-code configuration.
 
 # Private GitHub Projects v2 board, synced weekly by .github/workflows/sync-roadmap.yml

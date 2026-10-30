@@ -1,16 +1,16 @@
 ---
-title: Configuration & Management
+title: Configuration & management
 description: Web-based configuration.
 icon: cog
 features:
-  - title: Web-Based Dashboard
+  - title: Web-based dashboard
     description: Configure and monitor from a browser.
-  - title: Hot Reload
+  - title: Hot reload
     description: Change adapter settings without restarting the service.
-  - title: Real-Time Logs
+  - title: Real-time logs
     description: Live log streaming with level filtering.
-  - title: Config Backups
+  - title: Config backups
     description: Automatic timestamped backups on every config change.
-  - title: Adapter Lifecycle
+  - title: Adapter lifecycle
     description: Add, remove, enable, or disable adapters at runtime.
 ---

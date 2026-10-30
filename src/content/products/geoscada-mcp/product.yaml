@@ -4,21 +4,48 @@
 # machine over stdio, one server entry per Geo SCADA system.
 # See docs/authoring-content.md.
 
-name: MCP for Geo SCADA
+name: MCP for Geo SCADA™
+navName: Geo SCADA MCP
 order: 30
 shortDescription: >-
-  Troubleshoot Schneider Electric Geo SCADA (fka. ClearSCADA) by asking your AI assistant. A read-only
-  Model Context Protocol server that answers "why is this point stale?" from
-  the live system, with the evidence behind the answer.
+  Troubleshoot Schneider Electric Geo SCADA™, formerly ClearSCADA™, by asking your AI assistant.
 
-tagline: Ask Geo SCADA (fka. ClearSCADA) why — and get one answer from the live system
+tagline: Ask Geo SCADA why, and get one answer from the live system
 subtitle: >-
-  CSE ICON's MCP for Geo SCADA is a Model Context Protocol (MCP) server that
-  connects Claude, Cursor, and any other MCP client to Schneider Electric Geo
-  SCADA. Ask why a point has
-  been stale since 3am and get one answer assembled from configuration,
-  history, alarms, comms, and the audit trail, instead of pivoting between
-  ViewX, the alarm list, the config audit, and the historic viewer.
+  A read-only Model Context Protocol (MCP) server for Schneider Electric Geo SCADA, formerly ClearSCADA™. One answer from config, history, alarms, comms, and audit, instead of five screens in ViewX™.
+
+demo:
+  - question: Why has Lift Station 4 wet well level been stale since 3am?
+    tool: Running stale-point diagnosis
+    answer: >-
+      It's comms, not the sensor. The outstation stopped responding at 02:58
+      and every point on that RTU went stale together.
+  - question: Has that RTU dropped out before?
+    tool: Reading comms history
+    answer: >-
+      Yes, four times in the last two weeks, all between 02:00 and 04:00. That
+      pattern points to the radio link, not the RTU.
+    chart:
+      type: bar
+      values: [42, 18, 65, 37]
+      labels: [Oct 17, Oct 20, Oct 25, Oct 30]
+      caption: Outage length in minutes, each one starting between 02:00 and 04:00
+  - question: Why didn't the high level alarm fire on Reservoir 2 yesterday?
+    tool: Checking alarm configuration and audit trail
+    answer: >-
+      The level crossed 18 ft at 16:42, but an operator suppressed the alarm at
+      13:10 and it was still suppressed.
+    chart:
+      type: line
+      values: [15.2, 15.8, 16.4, 17.1, 17.6, 18.3, 18.6, 18.4, 17.9]
+      labels: [12:00, 14:00, 16:00, 18:00]
+      reference: 18
+      caption: Reservoir 2 level (ft), dashed line is the alarm limit
+  - question: Is the server healthy this morning?
+    tool: Checking server status
+    answer: >-
+      Yes. Main and standby are in sync, all drivers are up, and there were no
+      errors overnight. License usage is at 61%.
 
 cta:
   heading: Ready to spend less time chasing stale points?
@@ -26,7 +53,7 @@ cta:
   contactEmail: sales@cse-icon.com
 
 seo:
-  title: MCP for Geo SCADA — AI troubleshooting from CSE ICON
+  title: MCP for Geo SCADA | AI troubleshooting from CSE ICON
   description: >-
     A read-only Model Context Protocol server from CSE ICON for Schneider
     Electric Geo SCADA. Ask an AI assistant why a point is stale, why an alarm didn't fire,
