@@ -28,6 +28,7 @@ deployment, one product per URL slug.
   - [4. GitHub Projects Board](#4-github-projects-board)
   - [5. GitHub App for Roadmap Sync](#5-github-app-for-roadmap-sync)
   - [6. Repository Secrets & Variables](#6-repository-secrets--variables)
+  - [7. Branch Protection](#7-branch-protection)
 - [Local Development](#local-development)
 - [How to Push Updates](#how-to-push-updates)
 - [Voting System](#voting-system)
@@ -49,7 +50,7 @@ committed to the repo as JSON. The only live backend is the vote API.
 │                                                                      │
 │  ┌──────────────┐    ┌──────────────┐    ┌────────────────────────┐  │
 │  │ Main branch  │───▶│ GitHub Pages │───▶│ Static site            │  │
-│  │ (push)       │    │ (deploy)     │    │ Astro 6 + Tailwind 4   │  │
+│  │ (merged PR)  │    │ (deploy)     │    │ Astro 6 + Tailwind 4   │  │
 │  └──────────────┘    └──────────────┘    │ /  /<product-slug>     │  │
 │         │                                └───────────┬────────────┘  │
 │         │ (api/ changes)                             │ (votes)       │
@@ -103,10 +104,13 @@ project number **fails the build**, so malformed content cannot reach production
 
 ```
 products-site/
-├── .github/workflows/
-│   ├── deploy-site.yml          # Test, build Astro → deploy to GitHub Pages
-│   ├── deploy-functions.yml     # Build & deploy the Azure Function
-│   └── sync-roadmap.yml         # Pull roadmaps from GitHub Projects (weekly)
+├── .github/
+│   ├── rulesets/main.json       # Branch protection for main (applied by hand)
+│   └── workflows/
+│       ├── ci.yml               # Required PR checks: test, build site, build API
+│       ├── deploy-site.yml      # Test, build Astro → deploy to GitHub Pages
+│       ├── deploy-functions.yml # Build & deploy the Azure Function
+│       └── sync-roadmap.yml     # Roadmaps from GitHub Projects → PR (weekly)
 ├── api/                         # Azure Functions app (separate npm package)
 │   ├── vote/index.ts            # POST /api/vote + GET /api/vote/{itemId}
 │   ├── vote/email.ts            # Email validation + normalisation for dedupe
@@ -167,7 +171,7 @@ products-site/
 │   │       └── roadmap.astro    # Roadmap + voting
 │   └── styles/
 │       └── global.css           # Tailwind 4 entry, theme tokens, component classes
-├── tests/                       # Vitest — run in CI before every deploy
+├── tests/                       # Vitest — run on every PR and before every deploy
 ├── astro.config.mjs
 ├── postcss.config.mjs
 ├── tsconfig.json
@@ -187,8 +191,8 @@ local setup. See **[docs/authoring-content.md](docs/authoring-content.md)** for
 the full guide — field reference, icon list, image bands, variants, and what to
 do when the build complains.
 
-The short version: edit a file under `src/content/products/<slug>/`, commit to
-`main`, and the site rebuilds in about a minute.
+The short version: edit a file under `src/content/products/<slug>/`, open a pull
+request, and merge it once CI is green. The site rebuilds in about a minute.
 
 ---
 
@@ -387,19 +391,31 @@ log warns about it.
 
 ### 5. GitHub App for Roadmap Sync
 
-The sync needs a token that can read private org project boards. A **GitHub App**
-is used rather than a personal token: it is owned by the org, scoped narrowly, and
-does not break when someone leaves. One app covers **every** product's board.
+The sync needs a token that can read private org project boards and open a pull
+request with the result. A **GitHub App** is used rather than a personal token: it
+is owned by the org, scoped narrowly, and does not break when someone leaves. One
+app covers **every** product's board.
+
+`GITHUB_TOKEN` cannot do the writing: `main` only takes changes through a PR with
+passing checks, and a PR opened with `GITHUB_TOKEN` never triggers CI.
 
 1. https://github.com/organizations/cse-icon/settings/apps → **New GitHub App**
    - **Name:** `CSE Products Roadmap Sync`
    - **Homepage URL:** `https://products.cse-icon.com`
    - **Webhook:** untick **Active**
-2. **Permissions → Organization permissions → Projects: Read-only**
+2. **Permissions**
+   - **Organization permissions → Projects: Read-only**
+   - **Repository permissions → Contents: Read and write**
+   - **Repository permissions → Pull requests: Read and write**
 3. **Where can this app be installed?** → *Only on this account*
 4. Create it, then **Generate a private key** (downloads a `.pem`)
-5. **Install App** → install on the `cse-icon` organisation
+5. **Install App** → install on the `cse-icon` organisation, with
+   **Only select repositories → `products-site`**, so the write permissions
+   reach no other repo
 6. Note the **App ID** from the app's General settings page
+
+Changing an existing app's permissions needs an org owner to accept them on the
+installation (**Settings → GitHub Apps → Configure**) before tokens carry them.
 
 ### 6. Repository Secrets & Variables
 
@@ -416,7 +432,7 @@ does not break when someone leaves. One app covers **every** product's board.
 | Name | Value | Used By |
 |---|---|---|
 | `APP_ID` | GitHub App ID from step 5 | `sync-roadmap.yml` |
-| `PUBLIC_VOTE_API_URL` | `https://cse-products-votes.azurewebsites.net` | `deploy-site.yml`, `sync-roadmap.yml` |
+| `PUBLIC_VOTE_API_URL` | `https://cse-products-votes.azurewebsites.net` | `deploy-site.yml` |
 | `AZURE_FUNCTIONAPP_NAME` | `cse-products-votes` | `deploy-functions.yml` |
 | `AZURE_CLIENT_ID` | `GitHub Deploy` app registration `appId` | `deploy-functions.yml` |
 | `AZURE_TENANT_ID` | `az account show --query tenantId -o tsv` | `deploy-functions.yml` |
@@ -425,6 +441,35 @@ does not break when someone leaves. One app covers **every** product's board.
 Project numbers are not repo variables: they live in each product's
 `product.yaml`. No installation ID is needed either, because
 `create-github-app-token` resolves the installation from `owner:`.
+
+### 7. Branch Protection
+
+`main` is protected by a repository ruleset, kept in
+[.github/rulesets/main.json](.github/rulesets/main.json):
+
+- **Pull request required**, with no approvals required
+- **Status checks required:** `Test`, `Build site` and `Build vote API`, the job
+  names in [ci.yml](.github/workflows/ci.yml), accepted only from GitHub Actions
+- **Force pushes and deletion blocked**
+- **No bypass list**, admins included. To land an emergency fix while CI is
+  broken, an admin disables the ruleset, merges, and re-enables it.
+
+The file is a record, not live config: editing it changes nothing until it is
+applied. Create the ruleset, or update it after changing the file:
+
+```bash
+gh api --method POST repos/cse-icon/products-site/rulesets --input .github/rulesets/main.json
+
+gh api repos/cse-icon/products-site/rulesets --jq '.[] | "\(.id) \(.name)"'
+gh api --method PUT repos/cse-icon/products-site/rulesets/<id> --input .github/rulesets/main.json
+```
+
+To make a new check block merges, add its job to `ci.yml` **and** its `name:` to
+the ruleset. Rename a job the same way: a required check that never reports
+leaves every PR waiting on it.
+
+**Settings → General → Allow auto-merge** must be on, because the roadmap sync's
+PR merges itself once CI passes.
 
 ---
 
@@ -467,7 +512,7 @@ API's `ALLOWED_ORIGINS` (in `api/local.settings.json`) already allows
 ### Tests and validation
 
 ```bash
-npm test             # Vitest — run in CI before every deploy
+npm test             # Vitest — run on every PR and before every deploy
 npm run test:watch
 npm run build        # astro check + astro build; validates all content schemas
 ```
@@ -487,9 +532,12 @@ GH_TOKEN=<token with read:project> node scripts/sync-roadmap.mjs --dry-run
 
 ### Site content
 
-Edit anything under `src/`, `public/`, `astro.config.mjs`, or `package.json`, push
-to `main`, and **Deploy Site** runs automatically (~1 minute). It runs `npm test`
-before building, so a failing test blocks the deploy.
+Every change reaches `main` through a pull request. **CI** runs the tests, the
+site build and the vote API build on each PR, and merging stays blocked until all
+three pass (see [Branch Protection](#7-branch-protection)).
+
+Merging a change under `src/`, `public/`, `astro.config.mjs`, or `package.json`
+runs **Deploy Site** (~1 minute), which tests and builds again before deploying.
 
 Product copy lives in `src/content/products/` — see
 [docs/authoring-content.md](docs/authoring-content.md).
@@ -511,8 +559,8 @@ Changes under `api/` trigger **Deploy Azure Functions**.
 
 ### Manual deployments
 
-All three workflows support `workflow_dispatch` — run any of them from the
-**Actions** tab without pushing.
+The deploy and sync workflows support `workflow_dispatch` — run any of them from
+the **Actions** tab without pushing.
 
 ---
 
@@ -595,15 +643,16 @@ queries the GitHub Projects v2 GraphQL API for each board.
   duplicate) is skipped and its existing file is kept, so bad board data never
   reaches `main`. The log names each offending item.
 - Leaves a file untouched when its items have not changed, so `lastUpdated` only
-  moves when the board does and quiet weeks produce no commit or deploy
+  moves when the board does and quiet weeks produce no PR or deploy
 - Warns, without failing, about public items with a blank `Public Summary`,
   released items with no `Public Released In`, and categories with no colour in
   `product.yaml`
-- Runs `npm test`, then commits and pushes if anything changed, then rebuilds
-  and redeploys Pages in a second job — necessary because a `GITHUB_TOKEN` push
-  does not trigger `deploy-site.yml`
-- Attempts **every** product. If one board fails, the others are still
-  committed and deployed, and the run ends red so the failure is noticed
+- Runs `npm test`, then, if anything changed, force-pushes the
+  `bot/roadmap-sync` branch and opens a PR (or updates the open one) with
+  auto-merge on. CI runs on it like any other PR; when it merges, **Deploy
+  Site** publishes it. Only runs dispatched from `main` open a PR.
+- Attempts **every** product. If one board fails, the others still go into the
+  PR, and the run ends red so the failure is noticed
 
 ### Privacy
 
@@ -674,6 +723,27 @@ the product keeps its previous roadmap and other products sync normally.
 The token lacks `read:project`. In CI this means the App's permissions are wrong.
 Locally, `gh auth token` does not carry that scope — use a PAT with `read:project`
 or run `gh auth refresh -s read:project`.
+
+### Sync fails at "Open sync PR if changed"
+
+- A push or PR error ("Permission denied", "Resource not accessible by
+  integration") means the App lacks **Contents** or **Pull requests** write, its
+  installation does not include `products-site`, or an org owner has not yet
+  accepted the new permissions — see [step 5](#5-github-app-for-roadmap-sync)
+- An auto-merge error means **Allow auto-merge** is off in **Settings → General**.
+  The PR is still open and can be merged by hand.
+
+### The sync PR stays open
+
+A required check failed on it. Open the PR and read the failed check. Fix the
+board or the code, then re-run **Sync Roadmap**: it rebuilds the branch, and CI
+runs again.
+
+### A PR waits forever on a check that never runs
+
+The ruleset requires a check name that no job in `ci.yml` reports, usually after
+a job was renamed. Make the two match — see
+[Branch Protection](#7-branch-protection).
 
 ### Votes return CORS errors
 

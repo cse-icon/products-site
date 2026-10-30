@@ -5,18 +5,18 @@ on:
     - cron: '0 10 * * 1'
   workflow_dispatch:
 
+# main only takes changes through a PR with passing CI, so the sync opens one
+# instead of pushing. The App token does all the writing: unlike GITHUB_TOKEN,
+# its PR triggers ci.yml and its merge triggers deploy-site.yml.
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-    outputs:
-      changed: ${{ steps.commit.outputs.changed }}
     steps:
-      # Org-level Projects read-only. One token covers every product's board, so
+      # Org-level Projects read-only, plus Contents and Pull requests write on
+      # this repo for the sync PR. One token covers every product's board, so
       # adding a product needs no change here — see src/content/products/*/product.yaml.
       - name: Generate GitHub App token
         id: app-token
@@ -25,8 +25,11 @@ jobs:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: cse-icon
+          repositories: products-site
 
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
@@ -51,53 +54,29 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm test
 
-      - name: Commit if changed
-        id: commit
-        if: ${{ !cancelled() && steps.test.outcome == 'success' }}
+      # Only from main: the PR merges itself, so a run dispatched from a feature
+      # branch would otherwise carry that branch's commits into main.
+      # The bot branch is rebuilt from main on every run, so an open sync PR
+      # always shows the latest board instead of piling up.
+      - name: Open sync PR if changed
+        if: ${{ !cancelled() && steps.test.outcome == 'success' && github.ref == 'refs/heads/main' }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH: bot/roadmap-sync
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/roadmap
           if git diff --staged --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            git commit -m "chore: sync roadmap data"
-            git push
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "No roadmap changes."
+            exit 0
           fi
-
-  # A separate deploy job is needed because the bot's push above uses
-  # GITHUB_TOKEN, which does not trigger deploy-site.yml.
-  deploy:
-    needs: sync
-    # Deploy whatever was committed, even if another product's board failed.
-    if: ${{ !cancelled() && needs.sync.outputs.changed == 'true' }}
-    runs-on: ubuntu-latest
-    concurrency:
-      group: pages
-      cancel-in-progress: true
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
-        env:
-          PUBLIC_VOTE_API_URL: ${{ vars.PUBLIC_VOTE_API_URL }}
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/
-
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: sync roadmap data"
+          gh auth setup-git
+          git push --force origin "HEAD:refs/heads/$BRANCH"
+          if [ -z "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --base main --head "$BRANCH" \
+              --title "chore: sync roadmap data" \
+              --body "Synced from GitHub Projects by [Sync Roadmap]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID). Merges itself once CI passes."
+          fi
+          gh pr merge "$BRANCH" --auto --squash
