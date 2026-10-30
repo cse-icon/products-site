@@ -9,8 +9,9 @@
  *   GH_TOKEN  — GitHub App token (or PAT) with org-level read:project
  *
  * Writes src/data/roadmap/<slug>.json as { lastUpdated, items }. A roadmap is
- * validated before it is written; one that fails is skipped and its existing
- * file is left alone, so bad board data never reaches main. A roadmap whose
+ * validated before it is written; one that fails, or whose board comes back
+ * empty when the existing file is not, is skipped and its existing file is left
+ * alone, so bad board data never reaches main. A roadmap whose
  * items have not changed is not rewritten, so `lastUpdated` only moves when the
  * board does.
  *
@@ -184,6 +185,18 @@ function readExisting(outputPath) {
  */
 async function syncProduct({ slug, org, projectNumber, categories }) {
   const rawItems = await fetchProjectItems({ org, projectNumber });
+  const outputPath = join(OUTPUT_DIR, `${slug}.json`);
+  const existing = readExisting(outputPath);
+
+  // GitHub silently leaves out items whose repository the token cannot see, so
+  // a token missing repo access reads as an empty board. Writing that would wipe
+  // the live roadmap. To clear one on purpose, set Public? to No instead.
+  if (rawItems.length === 0 && existing?.items?.length > 0) {
+    throw new Error(
+      'the board returned no items, but the existing roadmap has some. The token most likely cannot see the repositories the items belong to. The existing roadmap file was kept.',
+    );
+  }
+
   const items = filterPublicItems(rawItems).map(transformItem);
 
   const errors = validateRoadmap(items);
@@ -201,10 +214,9 @@ async function syncProduct({ slug, org, projectNumber, categories }) {
     uncoloredCategories(items, categories),
   );
 
-  const outputPath = join(OUTPUT_DIR, `${slug}.json`);
   const counts = `${items.length} public of ${rawItems.length} board items`;
 
-  if (sameItems(readExisting(outputPath)?.items ?? null, items)) {
+  if (sameItems(existing?.items ?? null, items)) {
     return `${slug}: ${counts}, unchanged`;
   }
 

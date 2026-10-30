@@ -15,17 +15,18 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      # Org-level Projects read-only, plus Contents and Pull requests write on
-      # this repo for the sync PR. One token covers every product's board, so
-      # adding a product needs no change here — see src/content/products/*/product.yaml.
-      - name: Generate GitHub App token
-        id: app-token
+      # Projects read-only, across every repo the App is installed on: board items
+      # are issues in other repos, and GitHub leaves out any item whose repo the
+      # token cannot see. One token covers every product's board, so adding a
+      # product needs no change here — see src/content/products/*/product.yaml.
+      - name: Generate read token
+        id: read-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: cse-icon
-          repositories: products-site
+          permission-organization-projects: read
 
       - uses: actions/checkout@v4
         with:
@@ -44,7 +45,7 @@ jobs:
       - name: Fetch roadmaps from GitHub Projects
         id: fetch
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ steps.read-token.outputs.token }}
         run: node scripts/sync-roadmap.mjs
 
       # The steps below run even when one board failed, so the products that
@@ -54,6 +55,19 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm test
 
+      # Write access to this repo only, and only for the step that opens the PR.
+      - name: Generate PR token
+        id: pr-token
+        if: ${{ !cancelled() && steps.test.outcome == 'success' && github.ref == 'refs/heads/main' }}
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: cse-icon
+          repositories: products-site
+          permission-contents: write
+          permission-pull-requests: write
+
       # Only from main: the PR merges itself, so a run dispatched from a feature
       # branch would otherwise carry that branch's commits into main.
       # The bot branch is rebuilt from main on every run, so an open sync PR
@@ -61,7 +75,7 @@ jobs:
       - name: Open sync PR if changed
         if: ${{ !cancelled() && steps.test.outcome == 'success' && github.ref == 'refs/heads/main' }}
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ steps.pr-token.outputs.token }}
           BRANCH: bot/roadmap-sync
         run: |
           git add src/data/roadmap

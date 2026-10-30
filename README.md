@@ -409,10 +409,15 @@ passing checks, and a PR opened with `GITHUB_TOKEN` never triggers CI.
    - **Repository permissions → Pull requests: Read and write**
 3. **Where can this app be installed?** → *Only on this account*
 4. Create it, then **Generate a private key** (downloads a `.pem`)
-5. **Install App** → install on the `cse-icon` organisation, with
-   **Only select repositories → `products-site`**, so the write permissions
-   reach no other repo
+5. **Install App** → install on the `cse-icon` organisation, with access to
+   `products-site` **and every repo whose issues appear on a roadmap board**.
+   GitHub leaves out board items from repos the installation cannot see, so a
+   narrower installation reads as an empty board.
 6. Note the **App ID** from the app's General settings page
+
+The workflow narrows each token it mints rather than relying on the
+installation: the fetch token is Projects read-only, and the PR token is
+Contents and Pull requests write on `products-site` alone.
 
 Changing an existing app's permissions needs an org owner to accept them on the
 installation (**Settings → GitHub Apps → Configure**) before tokens carry them.
@@ -642,6 +647,10 @@ queries the GitHub Projects v2 GraphQL API for each board.
   apply. A board with an invalid public item (an unknown `Public Status`, a
   duplicate) is skipped and its existing file is kept, so bad board data never
   reaches `main`. The log names each offending item.
+- **Refuses to empty a roadmap.** A board that returns no items at all, while
+  the product's file has some, is skipped the same way: it almost always means
+  the token cannot see the items' repos. To clear a roadmap on purpose, set
+  `Public?` to `No` on its items.
 - Leaves a file untouched when its items have not changed, so `lastUpdated` only
   moves when the board does and quiet weeks produce no PR or deploy
 - Warns, without failing, about public items with a blank `Public Summary`,
@@ -723,6 +732,14 @@ the product keeps its previous roadmap and other products sync normally.
 The token lacks `read:project`. In CI this means the App's permissions are wrong.
 Locally, `gh auth token` does not carry that scope — use a PAT with `read:project`
 or run `gh auth refresh -s read:project`.
+
+### Sync fails with "the board returned no items"
+
+The token saw an empty board, which GitHub reports when the App's installation
+does not include the repos the board's issues live in. Add those repos under
+**Settings → GitHub Apps → CSE Products Roadmap Sync → Configure → Repository
+access**, then re-run **Sync Roadmap**. The product keeps its previous roadmap
+until then.
 
 ### Sync fails at "Open sync PR if changed"
 
