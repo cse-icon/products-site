@@ -1,47 +1,94 @@
 ---
 /**
- * Site footer. Previously duplicated — and divergent — between the product and
- * roadmap pages; now rendered once by BaseLayout for every page.
+ * Site footer, matching www.cse-icon.com, with this site's trademark notices
+ * in a strip just above it. Rendered once by BaseLayout for every page.
  */
-interface Props {
-  /** Tint the footer with the brand colour instead of the page surface. */
-  variant?: 'plain' | 'brand';
-  /** Link classes, supplied by BaseLayout so both share one source of truth. */
-  linkClass: string;
-}
-
-const { variant = 'plain', linkClass } = Astro.props;
+import { footer, type MenuItem } from '../lib/site-nav';
 
 const year = new Date().getFullYear();
 
-const shellClass =
-  variant === 'brand'
-    ? 'bg-brand-600 py-5 text-center'
-    : 'border-t border-[var(--color-border)] py-6 text-center';
-
-const copyrightClass =
-  variant === 'brand' ? 'text-xs text-white/60' : 'text-xs text-[var(--color-text-muted)]';
+const heading = 'block text-lg font-bold leading-tight text-white transition-colors hover:text-brand-600';
+const link = 'text-white transition-colors hover:text-brand-600';
 ---
 
-<footer class={shellClass}>
-  <div class="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs">
-      <a href="https://cse-icon.com" class={linkClass}>CSE ICON, Inc.</a>
-      <a href="mailto:sales@cse-icon.com" class={linkClass}>sales@cse-icon.com</a>
-      <a href="/" class={linkClass}>All products</a>
-    </div>
-    <p class={copyrightClass}>
-      &copy; {year} CSE ICON, Inc. All rights reserved.
-    </p>
-    <p class={`${copyrightClass} max-w-3xl`}>
+<section aria-label="Trademarks" class="border-t border-[var(--color-border)] bg-[var(--color-surface)] py-6">
+  <div class="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 text-center text-xs text-[var(--color-text-muted)] sm:px-6 lg:px-8">
+    <p class="max-w-3xl">
       AVEVA and the AVEVA logo are a trademark or registered trademark of AVEVA Group Limited in
       the U.S. and other countries. Canary and Canary Historian are trademarks of Canary Labs. Schneider Electric, Geo SCADA, ClearSCADA, and ViewX are trademarks of Schneider Electric. Snowflake is a registered trademark of Snowflake Inc. Microsoft, Azure, and Teams are trademarks of the Microsoft group of companies. Apache, Apache Parquet, and Apache Iceberg are trademarks of the Apache Software Foundation. Okta is a registered trademark of Okta, Inc. Cloudflare is a registered trademark of Cloudflare, Inc. Slack is a registered trademark of Slack Technologies, LLC.
     </p>
-    <p class={`${copyrightClass} max-w-3xl`}>
+    <p class="max-w-3xl">
       All other product names, logos, and brands are the property of their respective owners. Company,
       product, and service names used on this site are for identification purposes only. Use of
       these names, logos, and brands does not imply affiliation or endorsement unless expressly
       stated.
     </p>
   </div>
+</section>
+
+<footer class="bg-[#222222] text-sm text-white">
+  <div class="mx-auto grid max-w-7xl gap-x-8 gap-y-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+    <!-- Company -->
+    <div class="space-y-3">
+      <a href="https://www.cse-icon.com/" aria-label="CSE ICON home" class="inline-block">
+        <img src="/cse-icon-logo-white.png" alt="CSE ICON" width="600" height="129" class="w-[150px]" />
+      </a>
+      <p><a href={`mailto:${footer.email}`} class={link}>{footer.email}</a></p>
+      {footer.locations.map((loc) => (
+        <p class="leading-tight">
+          <strong>{loc.city}</strong><br />
+          {loc.phone}
+        </p>
+      ))}
+      <p class="leading-relaxed">
+        <a href={footer.legal[0].href} class={link}>{footer.legal[0].label}</a> |
+        <a href={footer.legal[1].href} class={link}>{footer.legal[1].label}</a><br />
+        <a href={footer.legal[2].href} class={link}>{footer.legal[2].label}</a>
+      </p>
+    </div>
+
+    <!-- Services + Solutions -->
+    <div>
+      <a href={footer.services.href} class={heading}>{footer.services.label}</a>
+      <ul class="mt-2 space-y-2">
+        {footer.services.items.map((item: MenuItem) => (
+          <li>
+            <a href={item.href} class={link}>{item.label}</a>
+            {item.children && (
+              <ul class="mt-2 space-y-2 pl-4">
+                {item.children.map((child) => (
+                  <li><a href={child.href} class={link}>{child.label}</a></li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- News + Insights -->
+    <div>
+      <a href={footer.news.href} class={heading}>{footer.news.label}</a>
+      <p class="mt-2">(Categories)</p>
+      <ul class="mt-2 space-y-2">
+        {footer.news.items.map((item) => (
+          <li><a href={item.href} class={link}>{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- About -->
+    <div>
+      <span class="block text-lg font-bold leading-tight">{footer.about.label}</span>
+      <ul class="mt-2 space-y-2">
+        {footer.about.items.map((item) => (
+          <li><a href={item.href} class={link}>{item.label}</a></li>
+        ))}
+      </ul>
+      <a href={footer.careers.href} class={`${heading} mt-6`}>{footer.careers.label}</a>
+      <a href={footer.contact.href} class={`${heading} mt-6`}>{footer.contact.label}</a>
+      <p class="mt-6 text-xs leading-tight">&copy;{year} CSE ICON, Inc. All Rights Reserved.</p>
+    </div>
+  </div>
+  <div class="h-5 bg-[#171717]"></div>
 </footer>

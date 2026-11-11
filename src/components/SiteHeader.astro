@@ -1,0 +1,145 @@
+---
+/**
+ * Main header, matching www.cse-icon.com: logo on the left, the company menu on
+ * the right. Dropdowns open on hover or keyboard focus; below the lg breakpoint
+ * the menu moves behind a toggle button, as on the main site.
+ */
+import { headerMenu, mainSiteUrl, type MenuItem } from '../lib/site-nav';
+
+const chevron = 'M19.5 8.25l-7.5 7.5-7.5-7.5';
+
+const topLink =
+  'flex items-center gap-1 py-[29px] text-sm font-semibold text-black/60 transition-opacity hover:opacity-70 dark:text-slate-300';
+const subLink =
+  'flex w-[200px] items-center justify-between px-5 py-[15px] text-sm font-semibold leading-none text-black/60 transition-opacity hover:opacity-70 dark:text-slate-300';
+const panel =
+  'invisible absolute z-50 w-60 border-t-[3px] border-brand-600 bg-white py-5 text-left opacity-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] transition-opacity duration-200 dark:bg-slate-900';
+
+const mobileLink = (depth: number) =>
+  `block border-b border-black/[0.03] py-2.5 text-sm font-semibold text-black/60 dark:border-white/5 dark:text-slate-300 ${
+    depth > 0 ? 'pl-5' : ''
+  }`;
+
+// Flattens the menu for the phone panel, where nested items are indented
+// rather than shown in fly-outs.
+function flatten(items: MenuItem[], depth = 0): { item: MenuItem; depth: number }[] {
+  return items.flatMap((item) => [{ item, depth }, ...flatten(item.children ?? [], depth + 1)]);
+}
+const mobileItems = flatten(headerMenu);
+---
+
+<header class="relative z-50 bg-white shadow-[0_1px_0_rgba(0,0,0,0.1)] dark:bg-slate-900 dark:shadow-[0_1px_0_rgba(255,255,255,0.05)]">
+  <div class="mx-auto flex h-[80px] max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+    <a href={mainSiteUrl} aria-label="CSE ICON home" class="shrink-0 rounded dark:bg-white dark:px-2 dark:py-1">
+      <img src="/cse-icon-logo.png" alt="CSE ICON" width="214" height="45" class="h-9 w-auto" />
+    </a>
+
+    <!-- Desktop menu -->
+    <nav aria-label="CSE ICON" class="hidden lg:block">
+      <ul class="flex items-center gap-[22px]">
+        {headerMenu.map((top) => (
+          <li class="group/l1 relative">
+            {top.href ? (
+              <a href={top.href} class={topLink}>
+                {top.label}
+                {top.children && (
+                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d={chevron} />
+                  </svg>
+                )}
+              </a>
+            ) : (
+              <button type="button" class={topLink} aria-haspopup="true">
+                {top.label}
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d={chevron} />
+                </svg>
+              </button>
+            )}
+
+            {top.children && (
+              <ul class={`${panel} left-0 top-full group-hover/l1:visible group-hover/l1:opacity-100 group-focus-within/l1:visible group-focus-within/l1:opacity-100`}>
+                {top.children.map((sub) => (
+                  <li class="group/l2 relative">
+                    <a href={sub.href} class={subLink}>
+                      {sub.label}
+                      {sub.children && (
+                        <svg class="h-3.5 w-3.5 -rotate-90" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d={chevron} />
+                        </svg>
+                      )}
+                    </a>
+                    {sub.children && (
+                      <ul class={`${panel} left-full -top-[23px] group-hover/l2:visible group-hover/l2:opacity-100 group-focus-within/l2:visible group-focus-within/l2:opacity-100`}>
+                        {sub.children.map((leaf) => (
+                          <li>
+                            <a href={leaf.href} class={subLink}>{leaf.label}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Phone and tablet menu toggle -->
+    <button
+      id="site-menu-button"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-menu"
+      class="inline-flex items-center gap-2 text-sm font-semibold text-black/60 lg:hidden dark:text-slate-300"
+    >
+      <span>Select Page</span>
+      <svg class="h-7 w-7 text-brand-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+      </svg>
+    </button>
+  </div>
+
+  <nav
+    id="site-menu"
+    aria-label="CSE ICON"
+    class="absolute inset-x-0 top-full hidden border-t-[3px] border-brand-600 bg-white px-[5%] py-4 shadow-[0_2px_5px_rgba(0,0,0,0.1)] lg:hidden dark:bg-slate-900"
+  >
+    <ul>
+      {mobileItems.map(({ item, depth }) => (
+        <li style={depth > 1 ? `padding-left: ${(depth - 1) * 1.25}rem` : undefined}>
+          {item.href ? (
+            <a href={item.href} class={mobileLink(depth)}>{item.label}</a>
+          ) : (
+            <span class={mobileLink(depth)}>{item.label}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const button = document.getElementById('site-menu-button');
+  const menu = document.getElementById('site-menu');
+
+  function setOpen(open: boolean) {
+    menu?.classList.toggle('hidden', !open);
+    button?.setAttribute('aria-expanded', String(open));
+  }
+
+  button?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(menu?.classList.contains('hidden') ?? false);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (menu && !menu.contains(e.target as Node)) setOpen(false);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>
