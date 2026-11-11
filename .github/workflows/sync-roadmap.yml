@@ -21,18 +21,18 @@ jobs:
       # product needs no change here — see src/content/products/*/product.yaml.
       - name: Generate read token
         id: read-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: cse-icon
           permission-organization-projects: read
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -59,7 +59,7 @@ jobs:
       - name: Generate PR token
         id: pr-token
         if: ${{ !cancelled() && steps.test.outcome == 'success' && github.ref == 'refs/heads/main' }}
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
