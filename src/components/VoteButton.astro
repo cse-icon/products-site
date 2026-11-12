@@ -1,6 +1,8 @@
 ---
 // Vote modal and client-side voting logic. Included once per roadmap page;
 // handles every .vote-button on the page.
+import { privacyNoticeUrl } from '../lib/site-nav';
+
 interface Props {
   /** Recorded alongside the vote so sales can segment interest by product. */
   productSlug: string;
@@ -33,6 +35,10 @@ const { productSlug } = Astro.props;
         placeholder="you@company.com"
         class="mt-1 block w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm placeholder:text-[var(--color-text-muted)] focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/25"
       />
+      <p class="mt-1.5 text-xs text-[var(--color-text-muted)]">
+        We store your email with your vote and may contact you about this feature. See our{' '}
+        <a href={privacyNoticeUrl} target="_blank" rel="noopener" class="underline hover:text-brand-600">Privacy Notice</a>.
+      </p>
       <label for="vote-usecase" class="mt-3 block text-sm font-medium">Use Case <span class="font-normal text-[var(--color-text-muted)]">(optional)</span></label>
       <textarea
         id="vote-usecase"
