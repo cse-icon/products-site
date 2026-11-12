@@ -48,6 +48,9 @@ const about: MenuItem[] = [
 
 export const mainSiteUrl = `${MAIN}/`;
 
+/** Also linked from the vote form, which collects an email address. */
+export const privacyNoticeUrl = `${MAIN}/privacy-policy/`;
+
 export const headerMenu: MenuItem[] = [
   { label: 'SERVICES + SOLUTIONS', href: `${MAIN}/services-solutions/`, children: servicesSolutions },
   { label: 'NEWS + INSIGHTS', href: `${MAIN}/news-insights/` },
@@ -63,7 +66,7 @@ export const footer = {
     { city: 'Lafayette, LA', phone: '+1.337.419.2799' },
   ],
   legal: [
-    { label: 'Privacy Notice', href: `${MAIN}/privacy-policy/` },
+    { label: 'Privacy Notice', href: privacyNoticeUrl },
     { label: 'Terms of Use', href: `${MAIN}/terms-and-conditions/` },
     { label: 'Cookie Policy', href: `${MAIN}/cookie-policy/` },
   ],
