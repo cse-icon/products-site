@@ -54,6 +54,14 @@ const navLinkClass = (href: string) =>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Termly cookie consent banner. Same website ID as www.cse-icon.com, where
+         the WordPress plugin adds this tag. Termly needs it to be the first
+         script on the page so it can hold back others until consent is given. -->
+    <script
+      is:inline
+      type="text/javascript"
+      src="https://app.termly.io/resource-blocker/05154b74-111c-42f6-bd2c-9091cb7a2421?autoBlock=on"
+    ></script>
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical.href} />}
     <link rel="icon" type="image/png" href="/favicon.png" />
