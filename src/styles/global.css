@@ -98,3 +98,16 @@
   .badge-purple { @apply bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400; }
   .badge-pink { @apply bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-400; }
 }
+
+/* Termly cookie banner: keep it pinned to the bottom-right corner.
+   Termly's settings already say "bottom right", but the banner renders at the
+   top left (also on www.cse-icon.com), apparently because its position rules
+   set `bottom`/`right` without clearing `top`/`left`. The class names carry a
+   generated suffix, so match on the stable part. Remove once Termly fixes it. */
+[class*="termly-styles-termly-tooltip"][class*="termly-styles-bottom_right"] {
+  position: fixed !important;
+  top: auto !important;
+  left: auto !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
